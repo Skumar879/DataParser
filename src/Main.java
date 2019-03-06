@@ -14,5 +14,6 @@ public class Main {
         System.out.println(data);
 
         ArrayList<ElectionResult> results = Utils.parse2016ElectionResults(data);
+        System.out.println(results);
     }
 }

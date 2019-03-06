@@ -31,6 +31,14 @@ public class Utils {
 //        }
 //        return results;
         ArrayList<ElectionResult> results = new ArrayList<ElectionResult>();
-        return null;
+        String[] rows = data.split("\n");
+
+        for (int i = 1; i < rows.length; i++) {
+            ElectionResult temp = new ElectionResult();
+            String row = rows[i];
+            String[] splitrow = row.split(",");
+            temp.inputfullSet(splitrow);
+        }
+        return results;
     }
 }
