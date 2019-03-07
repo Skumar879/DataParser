@@ -9,6 +9,7 @@ public class ElectionResult {
     public String state_abbr;
     public String county_name;
     public String combined_fips;
+    public int NormLength = 12;
 
     public double getVotes_dem() {
         return votes_dem;
@@ -91,15 +92,51 @@ public class ElectionResult {
     }
 
     public void inputfullSet(String[] fullset){
-        setVotes_dem(Double.parseDouble(fullset[1]));
-        setVotes_gop(Double.parseDouble(fullset[2]));
-        setTotal_votes(Double.parseDouble(fullset[3]));
-        setPer_dem(Double.parseDouble(fullset[4]));
-        setPer_gop(Double.parseDouble(fullset[5]));
-        setDiff(fullset[6]);
-        setPer_point_diff(Double.parseDouble(fullset[7]));
-        setState_abbr(fullset[8]);
-        setCounty_name(fullset[9]);
-        setCombined_fips(fullset[10]);
+        String[] organized = organizeData(fullset);
+        //System.out.println(fullset[0]);
+        setVotes_dem(Double.parseDouble(organized[1]));
+        setVotes_gop(Double.parseDouble(organized[2]));
+        setTotal_votes(Double.parseDouble(organized[3]));
+        setPer_dem(Double.parseDouble(organized[4]));
+        setPer_gop(Double.parseDouble(organized[5]));
+        setDiff(organized[6]);
+        setPer_point_diff(Double.parseDouble(organized[7]));
+        setState_abbr(organized[8]);
+        setCounty_name(organized[9]);
+        setCombined_fips(organized[10]);
+    }
+
+    private String[] organizeData(String[] fullset) {
+        String[] newSet = new String[20];
+        if (fullset.length != NormLength){
+            for (int j = 1; j < fullset.length; j++) {
+                String s = fullset[j];
+                if(s.contains("%") || s.contains("\"")) s = removeUnneeded(fullset[j]);
+                newSet[j] = s;
+            }
+        } else {
+            for (int i = 1; i < fullset.length; i++) {
+                String s = fullset[i];
+                if(s.contains("%") || s.contains("\"")) s = removeUnneeded(fullset[i]);
+                if(i == 7) s = (removeUnneeded(fullset[i - 1]) + ", " + removeUnneeded(fullset[i]));
+                if(i >= 7) newSet[i - 1] = s;
+                newSet[i] = s;
+            }
+        }
+        return newSet;
+    }
+
+    private String removeUnneeded(String s) {
+        int indexOfUnneeded = s.indexOf("%");
+        if(indexOfUnneeded == -1) indexOfUnneeded = s.indexOf("\"");
+        else return removeUnneeded(s.substring(0, indexOfUnneeded) + s.substring(indexOfUnneeded + 1));
+
+        if(indexOfUnneeded == -1) return s;
+        return removeUnneeded(s.substring(0, indexOfUnneeded) + s.substring(indexOfUnneeded + 1));
+    }
+
+    public  String toString(){
+        String output = (votes_dem + ", " + votes_gop + ", " + total_votes + ", " + per_dem + ", " + per_gop  + ", " + diff + ", " + per_point_diff + ", " + state_abbr + ", " + county_name + ", " + combined_fips);
+        return output;
     }
 }
