@@ -41,4 +41,8 @@ public class Utils {
         }
         return results;
     }
+
+    public static void parseCompleteElectionResults(String data){
+        ArrayList<ElectionResult> results;
+    }
 }
