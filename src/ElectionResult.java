@@ -107,7 +107,7 @@ public class ElectionResult {
     }
 
     private String[] organizeData(String[] fullset) {
-        String[] newSet = new String[20];
+        String[] newSet = new String[13];
         if (fullset.length != NormLength){
             for (int j = 1; j < fullset.length; j++) {
                 String s = fullset[j];
