@@ -42,7 +42,34 @@ public class Utils {
         return results;
     }
 
-    public static void parseCompleteElectionResults(String data){
-        ArrayList<ElectionResult> results;
+    public static ArrayList<State> sortData(String presidential, String educationdata, String unemploymentdata){
+        parseElectionResults(presidential);
+        parseEducationData(educationdata);
+        parseUnemploymentData(unemploymentdata);
+
+        return null;
+    }
+
+    private static void parseUnemploymentData(String educationdata) {
+        String[] rows = educationdata.split("\n");
+
+    }
+
+    private static void parseEducationData(String educationdata) {
+        String[] rows = educationdata.split("\n");
+    }
+
+    private static void parseElectionResults(String presidentialdata) {
+        String[] rows = presidentialdata.split("\n");
+        for (int i = 0; i < rows.length; i++) {
+            String row = rows[i];
+            int firstquote = row.indexOf("\"");
+            int secondquote = row.indexOf("\"", firstquote + 1);
+            String quotes = row.substring(firstquote, secondquote + 1);
+            if(quotes.contains(",")){
+                //add removecomma method
+                //add removequotes method
+            }
+        }
     }
 }
